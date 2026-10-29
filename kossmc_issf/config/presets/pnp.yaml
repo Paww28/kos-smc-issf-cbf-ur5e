@@ -1,0 +1,44 @@
+# Reference parameters: pick-and-place (pnp_interpolated).
+trajectory: pnp_interpolated
+
+dt: 0.008                 # 1/125
+duration: 90
+q_init: [0.0, -1.5707963267948966, 1.5707963267948966, -1.5707963267948966, -1.5707963267948966, 0]   # [0.0, -pi/2, pi/2, -pi/2, -pi/2, 0]
+
+Kp: 1.5
+K_null: 0.9
+K_jl: 5
+# -2*pi + 10 / 2*pi - 10: q_min > q_max. Only (q_max - q_min)**2 enters the joint-limit gradient, so its
+# sign is unaffected; the range is 7.43 rad instead of 4*pi, which makes the term about 2.9x stronger.
+q_min: [3.7168146928204138, 3.7168146928204138, 3.7168146928204138, 3.7168146928204138, 3.7168146928204138, 3.7168146928204138]
+q_max: [-3.7168146928204138, -3.7168146928204138, -3.7168146928204138, -3.7168146928204138, -3.7168146928204138, -3.7168146928204138]
+q_mid: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+EPS: 1.0e-03
+Lambda: [5, 5, 5]         # diag
+k_smc: 0.15
+eps_qsmc: 0.9
+
+amplitude: 0.23
+frequency_traj: 0.05
+
+POS_MIN: [-0.25, -0.49, 0]
+POS_MAX: [0.7, 0.49, 0.7]
+CBF_ALPHA: 10
+ISSF_EPSILON: 0.5
+OBS_CENTER: [0.53, -0.1, 0.49]
+OBS_RADIUS: 0.055
+
+PNP_SPEED: 0.055
+PNP_THRESH: 2.0
+pnp_waypoints:            # HOME is replaced by the actual TCP after moveJ
+  - [-0.4942, -0.1353, 0.4853]   # HOME
+  - [-0.49,   -0.6,    0.49]     # APPROACH PICK
+  - [-0.49,   -0.6,    0.2]      # PICK
+  - [-0.49,   -0.6,    0.49]     # LIFT
+  - [-0.49,    0.55,   0.49]     # APPROACH PLACE 1
+  - [-0.1,     0.36,   0.49]     # APPROACH PLACE 2
+  - [-0.1,     0.36,   0.2]      # PLACE
+  - [-0.1,     0.36,   0.49]     # RETRACT
+
+DIST_STD: 0.03            # np.clip(np.random.normal(0.0, DIST_STD, 6), -DIST_CLIP, DIST_CLIP)
+DIST_CLIP: 0.05

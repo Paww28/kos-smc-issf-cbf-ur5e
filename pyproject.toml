@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kossmc-issf"
+version = "0.1.0"
+readme = "README.md"
+description = "KOS-SMC with a CBF / ISSf-CBF safety filter on OSCBF for the UR5e (RTDE)"
+requires-python = "==3.10.*"
+license = { text = "MIT" }
+authors = [{ name = "Muhammad Azzam Adhitya El Fawwaz" }]
+# Runtime dependencies are pinned in requirements.txt and installed with
+# `pip install --no-deps -r requirements.txt` (see the note in that file).
+# They are not declared here, because the pip resolver rejects the original environment.
+dependencies = []
+
+[project.scripts]
+kossmc-issf-run = "kossmc_issf.config.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["kossmc_issf*", "oscbf*"]
+
+[tool.setuptools.package-data]
+oscbf = ["LICENSE"]
+kossmc_issf = ["assets/ur_e_description/**/*", "config/presets/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
